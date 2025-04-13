@@ -1,24 +1,83 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 開発環境
 
-Things you may want to cover:
+- Ruby 3.4.2
+- Rails 8.0.2
+- PostgreSQL 15
 
-* Ruby version
+## 設計
 
-* System dependencies
+### 既存サービスの足りてない所
 
-* Configuration
+- 長期インターンを取り扱っているのに学生の大学院進学を視野に入れていない
+- 自己紹介等を書かせるのにエクセル等で出力できない（ユーザーの PC に保存できない）
 
-* Database creation
+-> 上記二つはかなり不満
 
-* Database initialization
+### 仕様
 
-* How to run the test suite
+以下は User（インターン生）
 
-* Services (job queues, cache servers, search engines, etc.)
+- インターン生が登録できる（サインアップ）
+- インターン生が企業に応募できる（メッセージ）
+- インターン生が企業からのリアクションに気がつける（通知）
+- インターン生が自身のプロフィールを充実させることができる
+- インターン生の自身のプロフィール情報をエクセルで出力できる
 
-* Deployment instructions
+以下は企業側
 
-* ...
+- 企業（人事担当者）がインターン生からの応募に気がつける（通知）
+- 企業が人事担当者のアカウントを作れる
+- 企業が募集ページを掲載できる
+- 企業（人事担当者）がインターン生を検索できる
+
+以下は共通
+
+- 企業（人事担当者）と企業でチャットを行える
+
+### 開発する API
+
+- サインアップ機能（POST）
+- ログイン機能（POST）
+  1. JWT を仕様してトークンベースの認証
+  2. トークンの有効期限とリフレッシュトークンをサポート
+- ログアウト機能（POST）
+- 応募機能（POST）
+- 通知機能（GET）
+  - 未読メッセージ
+- プロフィール編集機能（POST,PATCH）
+- エクセル出力機能（GET）
+- 自己アピールポイントを出力できるようにする
+- 募集編集機能（GET,POST,PATCH,DELETE）
+- チャット機能（GET,POST）
+  - メッセージ送信（POST）
+  - メッセージ履歴取得
+
+### model
+
+- インターン生（User）
+
+1. 名前
+2. 卒業予定年度（博士卒まで表示する）
+3. 就きたい業界
+4. 出勤可能人数 / 週　（週何回まで出勤可能か？）
+5. 自己アピール欄（500 文字程度）
+6. 扱えるスキル欄（経験年数や資格など）
+7. ポートフォリオなどのリンク欄
+
+- 企業
+
+1. 企業名
+2. 募集リスト（募集中問わず）
+3. 人事担当者のリスト
+
+### リレーション
+
+- インターン生（User）と企業（Company）は多対多の関係
+
+1. 中間テーブル：Applications
+
+- インターン生 ID
+- 企業 ID
+- 応募ステータス（例：応募中、承認済み、却下）
