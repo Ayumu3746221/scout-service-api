@@ -1,0 +1,132 @@
+@startuml yonde
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+left to right direction
+
+entity "user" as user {
+    * id : INT <<PK>>
+    --
+    * email : VARCHAR
+    * password : VARCHAR
+    * role : ENUM("student", "recruiter")
+}
+
+entity "notification" as notification {
+    * id : INT <<PK>>
+    --
+    * user_id : INT <<FK>>        ' 外部キー（User.id）
+    * content : TEXT              ' 通知の内容
+    * is_read : BOOLEAN           ' 通知を見たかどうか
+    * created_at : DATETIME       ' 通知作成日時
+}
+
+entity "student" as student {
+    * id : INT <<PK>> <<FK>>  ' 外部キー
+    --
+    * introduce : TEXT        ' 自己紹介
+    * graduation_year : YEAR  ' 卒業年度
+    * school : VARCHAR        ' 現在就学中の学校
+    * portfolio_url : VARCHAR ' ポートフォリオURL
+}
+
+entity "company" as company {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR
+    * email : VARCHAR
+    * address : VARCHAR
+    * industry : VARCHAR
+    * description : TEXT
+}
+
+entity "job_posting" as job_posting {
+    * id : INT <<PK>>
+    --
+    * company_id : INT <<FK>> ' 外部キー（Company.id）
+    * title : VARCHAR
+    * description : TEXT
+    * requirements : TEXT
+    * is_active : BOOLEAN
+    * created_at : DATETIME
+    * updated_at : DATETIME
+}
+
+entity "recruiter" as recruiter {
+    * id : INT <<PK>> <<FK>> ' 外部キー（User.id）
+    --
+    * company_id : INT <<FK>> ' 外部キー（Company.id）
+    * name : VARCHAR
+}
+
+entity "message" as message {
+    * id : INT <<PK>>
+    --
+    * sender_id : INT <<FK>>       ' 外部キー（User.id）
+    * receiver_id : INT <<FK>>     ' 外部キー（User.id）
+    * content : TEXT               ' メッセージ内容
+    * is_read : BOOLEAN            ' メッセージを既読かどうか
+    * created_at : DATETIME        ' メッセージ送信日時
+}
+
+' マスターテーブル : スキル
+entity "skill" as skill {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR          ' スキル名
+}
+
+' 中間テーブル : 学生とスキル
+entity "student_skill" as student_skill {
+    * student_id : INT <<FK>> ' 外部キー
+    * skill_id : INT <<FK>>   ' 外部キー
+}
+
+' マスターテーブル　:　業界
+entity "industry" as industry {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR          ' 希望業界名
+}
+
+' 中間テーブル : 学生と業界
+entity "student_industry" as student_industry {
+    * student_id : INT <<FK>> ' 外部キー
+    * industry_id : INT <<FK>> ' 外部キー
+}
+
+' 中間テーブル : 募集とスキル
+entity "job_posting_skill" as job_posting_skill {
+    * job_posting_id : INT <<FK>> ' 外部キー
+    * skill_id : INT <<FK>>       ' 外部キー
+}
+
+' 中間テーブル : 募集と業界
+entity "job_posting_industry" as job_posting_industry {
+    * job_posting_id : INT <<FK>> ' 外部キー
+    * industry_id : INT <<FK>>    ' 外部キー
+}
+
+
+
+' リレーションシップの定義
+user ||--|| student : "1 to 1"
+user ||--|| recruiter : "1 to 1"
+user ||--o{ notification : "has notifications"
+user ||--o{ message : "sends messages"
+user ||--o{ message : "receives messages"
+student ||--o{ student_skill : "has skills"
+skill ||--o{ student_skill : ""
+student ||--o{ student_industry : "has industries"
+industry ||--o{ student_industry : ""
+company ||--o{ recruiter : "has recruiters"
+company ||--o{ job_posting : "has job postings"
+job_posting ||--o{ job_posting_skill : "requires skills"
+skill ||--o{ job_posting_skill : ""
+job_posting ||--o{ job_posting_industry : "targets industries"
+industry ||--o{ job_posting_industry : ""
+
+@enduml
