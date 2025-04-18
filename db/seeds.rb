@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Industry.create!([
+  { id: 1, name: "IT" },
+  { id: 2, name: "Finance" },
+  { id: 3, name: "Healthcare" },
+  { id: 4, name: "Education" },
+  { id: 5, name: "Food & Beverage" }
+])

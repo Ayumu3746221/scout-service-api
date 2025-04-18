@@ -17,71 +17,45 @@
 
 ### 仕様
 
-以下は User（インターン生）
+DB は /docs/erd.plantuml を参考に
 
-- インターン生が登録できる（サインアップ）
-- インターン生が企業に応募できる（メッセージ）
-- インターン生が企業からのリアクションに気がつける（通知）
-- インターン生が自身のプロフィールを充実させることができる
-- インターン生の自身のプロフィール情報をエクセルで出力できる
+- authentication（認証機能）
 
-以下は企業側
+  1. User の種類は {student , recuiter}
+  2. student は /signup で登録できる
+     リクエスト例
 
-- 企業（人事担当者）がインターン生からの応募に気がつける（通知）
-- 企業が人事担当者のアカウントを作れる
-- 企業が募集ページを掲載できる
-- 企業（人事担当者）がインターン生を検索できる
+  ```json
+  {
+    "user": {
+      "email": "test@example.com",
+      "password": "password123",
+      "password_confirmation": "password123",
+      "role": "student"
+    }
+  }
+  ```
 
-以下は共通
+  3.  company 最初の recuiter は company と一緒に登録できる
+      リクエスト例
 
-- 企業（人事担当者）と企業でチャットを行える
+      ```json
+      {
+        "company": {
+          "name": "Example Company",
+          "email": "example@company.com",
+          "industry_id": 1
+        },
+        "user": {
+          "email": "recruiter@example.com",
+          "password": "password123",
+          "password_confirmation": "password123"
+        },
+        "recruiter": {
+          "name": "John Recruiter"
+        }
+      }
+      ```
 
-### 開発する API
-
-- サインアップ機能（POST）
-- ログイン機能（POST）
-  1. JWT を仕様してトークンベースの認証
-  2. トークンの有効期限とリフレッシュトークンをサポート
-- ログアウト機能（POST）
-- 応募機能（POST）
-- 通知機能（GET）
-  - 未読メッセージ
-- プロフィール編集機能（POST,PATCH）
-- エクセル出力機能（GET）
-- 自己アピールポイントを出力できるようにする
-- 募集取得機能（GET）
-- 募集編集機能（POST,PATCH,DELETE）
-- チャット機能（GET,POST）
-  - メッセージ送信（POST）
-  - メッセージ履歴取得
-
-### model
-
-- インターン生（User）
-
-1. 名前
-2. 卒業予定年度（博士卒まで表示する）
-3. 就きたい業界
-4. 出勤可能人数 / 週　（週何回まで出勤可能か？）
-5. 自己アピール欄（500 文字程度）
-6. 扱えるスキル欄（経験年数や資格など）
-7. ポートフォリオなどのリンク欄
-
-- 企業
-
-1. 企業名
-2. 募集リスト（募集中問わず）
-3. 人事担当者のリスト
-
-### リレーション
-
-1. 中間テーブル：Applications 　多対多
-
-- インターン生 ID
-- 企業 ID
-- 応募ステータス（例：応募中、承認済み、却下）
-
-2. 募集と企業のリレーション　 1 対多
-
-- 企業 ID
-- 募集 ID
+  4.  二人目の recuiter からは recuiter の権利がある User しか生成できない
+  5.  iv.の時に作成された recuiter は作成した recuiter と同一の company を持つ
