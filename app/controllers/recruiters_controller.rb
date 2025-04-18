@@ -4,6 +4,8 @@ class RecruitersController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_recruiter!
 
+  # Handlerを利用したアプローチではうまく役割分担できないので
+  # Controllerで直接処理を行う
   def create
     user = User.new(user_params.merge(role: "recruiter"))
     if user.save
