@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "recruiters/create"
   get "companies/create_with_cruiter"
   devise_for :users, path: "", path_names: {
     sign_in: "login",
@@ -13,4 +14,6 @@ Rails.application.routes.draw do
   resources :companies, only: [] do
     post "create_with_recruiter", on: :collection
   end
+
+  resources :recruiters, only: [ :create ]
 end

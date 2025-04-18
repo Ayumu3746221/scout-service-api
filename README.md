@@ -23,7 +23,7 @@ DB は /docs/erd.plantuml を参考に
 
   1. User の種類は {student , recuiter}
   2. student は /signup で登録できる
-     リクエスト例：
+     リクエスト例
 
   ```json
   {
