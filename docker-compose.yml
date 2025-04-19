@@ -1,4 +1,3 @@
-version: "3.8"
 name: scout_service
 
 services:
@@ -40,6 +39,24 @@ services:
       rm -f tmp/pids/server.pid &&
       bundle exec rails db:create db:migrate db:seed &&
       bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/scout_service_test
+      RAILS_ENV: test
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bash -c "
+      bundle install &&
+      rm -f tmp/pids/server.pid &&
+      bundle exec rails db:create db:migrate"
 
 volumes:
   postgres_data:
