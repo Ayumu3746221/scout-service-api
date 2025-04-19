@@ -8,6 +8,11 @@ student_user:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   role: student
 
+student_user2:
+  email: student2@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  role: student
+
 recruiter_user:
   email: recruiter1@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>

@@ -1,15 +1,15 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+student1:
+  user: student_user
+  name: "テスト学生1"
+  introduce: "私は情報工学を専攻しています。プログラミングが好きで、特にWebアプリケーション開発に興味があります。"
+  graduation_year: <%= Date.current.year + 1 %>
+  school: "東京大学"
+  portfolio_url: "https://portfolio.example.com/student1"
 
-one:
-  user: one
-  introduce: MyText
-  graduation_year: 1
-  school: MyString
-  portfolio_url: MyString
-
-two:
-  user: two
-  introduce: MyText
-  graduation_year: 1
-  school: MyString
-  portfolio_url: MyString
+student2:
+  user: student_user2
+  name: "テスト学生2"
+  introduce: "デザインとフロントエンド開発を中心に勉強しています。UIUXに関心があり、ユーザー体験を向上させるプロダクト開発に携わりたいです。"
+  graduation_year: <%= Date.current.year + 2 %>
+  school: "京都大学"
+  portfolio_url: "https://portfolio.example.com/student2"
