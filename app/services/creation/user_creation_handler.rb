@@ -12,8 +12,10 @@ module Creation
 
       if user.save
         context[:user] = user
+        true
       else
         fail_with!(user)
+        false
       end
     end
   end

@@ -6,12 +6,19 @@ module Creation
     end
 
     def handle(context)
-      execute(context)
-      @next_handler&.handle(context)
-      rescue ActiveRecord::Rollback => e
-        raise e
-      rescue StandardError => e
-        handle_exception(e)
+      result = execute(context)
+
+      if result != false
+        @next_handler ? @next_handler.handle(context) : true
+      else
+        raise ActiveRecord::Rollback, "Failed to create record"
+      end
+    rescue CreationError => e
+      Rails.logger.error("CreationError: #{e.message}")
+      raise ActiveRecord::Rollback, e.message
+    rescue StandardError => e
+      handle_exception(e)
+      false
     end
 
     def execute(context)

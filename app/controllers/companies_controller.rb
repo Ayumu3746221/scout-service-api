@@ -11,27 +11,41 @@ class CompaniesController < ApplicationController
       recruiter_params: recruiter_params
     }
 
+    success = false
+    error_message = nil
+
+    # rescue文:chainでエラーが発生した時に後続のchainにはエラーが伝播するが
+    # 前のchainにエラーが伝播しないので、contoroller側でエラーをキャッチする必要がある
     ActiveRecord::Base.transaction do
-      # ハンドラーのチェーン構築
-      # Chain of Responsibility
-      company_creation = Creation::CompanyCreationHandler.new
-      user_creation = Creation::UserCreationHandler.new(role: "recruiter")
-      recruiter_creation = Creation::RecruiterCreationHandler.new
+      begin
+        company_creation = Creation::CompanyCreationHandler.new
+        user_creation = Creation::UserCreationHandler.new(role: "recruiter")
+        recruiter_creation = Creation::RecruiterCreationHandler.new
 
-      company_creation.set_next(user_creation)
-      user_creation.set_next(recruiter_creation)
-      handlers = company_creation
+        company_creation.set_next(user_creation)
+        user_creation.set_next(recruiter_creation)
 
-      handlers.handle(context)
+        if company_creation.handle(context)
+          success = true
+        else
+          error_message = "Failed to create records"
+          raise ActiveRecord::Rollback
+        end
+      rescue CreationError => e
+        error_message = e.message
+        raise ActiveRecord::Rollback
+      end
+    end
 
+    if success
       render json: {
         message: "Company and recruiter created successfully",
         user: context[:user].as_json(only: [ :id, :email, :role ])
       }, status: :created
-      rescue CreationError => e
-        render json: {
-          errors: e.message
-        }, status: :unprocessable_entity
+    else
+      render json: {
+        errors: error_message || "処理に失敗しました"
+      }, status: :unprocessable_entity
     end
   end
 

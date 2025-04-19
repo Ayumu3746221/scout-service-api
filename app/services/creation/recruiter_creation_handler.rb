@@ -15,8 +15,10 @@ module Creation
 
       if recuiter.save
         context[:recruiter] = recuiter
+        true
       else
         fail_with!(recuiter)
+        false
       end
     end
   end
