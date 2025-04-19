@@ -7,7 +7,7 @@ module Creation
 
       student = Student.new(
         user_id: user.id,
-        name: context[:student_params].slice(:name)
+        name: context[:student_params][:name]
         )
       if student.save
         context[:student] = student

@@ -7,7 +7,7 @@ skinparam linetype ortho
 
 left to right direction
 
-entity "user" as user {
+entity "user（created）" as user {
     * id : INT <<PK>>
     --
     * email : VARCHAR
@@ -34,7 +34,7 @@ entity "student" as student {
     * portfolio_url : VARCHAR ' ポートフォリオURL
 }
 
-entity "company" as company {
+entity "company(created)" as company {
     * id : INT <<PK>>
     --
     * name : VARCHAR
@@ -56,7 +56,7 @@ entity "job_posting" as job_posting {
     * updated_at : DATETIME
 }
 
-entity "recruiter" as recruiter {
+entity "recruiter(created)" as recruiter {
     * id : INT <<PK>> <<FK>> ' 外部キー（User.id）
     --
     * company_id : INT <<FK>> ' 外部キー（Company.id）
@@ -87,14 +87,14 @@ entity "student_skill" as student_skill {
 }
 
 ' マスターテーブル　:　業界
-entity "industry" as industry {
+entity "industry(created)" as industry {
     * id : INT <<PK>>
     --
     * name : VARCHAR          ' 希望業界名
 }
 
 ' 中間テーブル : 学生と業界
-entity "student_industry" as student_industry {
+entity "student_industry(created)" as student_industry {
     * student_id : INT <<FK>> ' 外部キー
     * industry_id : INT <<FK>> ' 外部キー
 }

@@ -53,9 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def student_params
-    params.require(:student).permit(
-      :name
-    )
+    params.require(:student).permit(:name)
   end
 
   def respond_with(resource, _opts = {})
