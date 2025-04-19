@@ -70,14 +70,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Setup database
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
-        run: |
-          SECRET_KEY_BASE=4eca4755a401ee95ec2029fb59c92a9c5630af7b9e6a7b25cc69c2669e963ded87429300ce8a13889bdf97cd0dbfe5a197dbf8451e71cd45db474e638454be82 bin/rails db:create
-          SECRET_KEY_BASE=4eca4755a401ee95ec2029fb59c92a9c5630af7b9e6a7b25cc69c2669e963ded87429300ce8a13889bdf97cd0dbfe5a197dbf8451e71cd45db474e638454be82 bin/rails db:migrate
-
       - name: Run tests
         env:
           RAILS_ENV: test
