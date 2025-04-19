@@ -27,6 +27,7 @@ entity "notification" as notification {
 entity "student" as student {
     * id : INT <<PK>> <<FK>>  ' 外部キー
     --
+    * name : VARCHAR          ' 学生名
     * introduce : TEXT        ' 自己紹介
     * graduation_year : YEAR  ' 卒業年度
     * school : VARCHAR        ' 現在就学中の学校

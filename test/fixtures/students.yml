@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  introduce: MyText
+  graduation_year: 1
+  school: MyString
+  portfolio_url: MyString
+
+two:
+  user: two
+  introduce: MyText
+  graduation_year: 1
+  school: MyString
+  portfolio_url: MyString
