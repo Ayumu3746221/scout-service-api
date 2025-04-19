@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -46,6 +46,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: scout_service_test
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -72,6 +73,6 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # REDIS_URL: redis://localhost:6379/0
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
+          SECRET_KEY_BASE: 4eca4755a401ee95ec2029fb59c92a9c5630af7b9e6a7b25cc69c2669e963ded87429300ce8a13889bdf97cd0dbfe5a197dbf8451e71cd45db474e638454be82
         run: bin/rails db:test:prepare test
