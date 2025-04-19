@@ -74,6 +74,7 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: |
           bin/rails db:create
           bin/rails db:migrate
@@ -82,5 +83,6 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
