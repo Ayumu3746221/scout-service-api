@@ -74,7 +74,6 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
-          SECRET_KEY_BASE: "4eca4755a401ee95ec2029fb59c92a9c5630af7b9e6a7b25cc69c2669e963ded87429300ce8a13889bdf97cd0dbfe5a197dbf8451e71cd45db474e638454be82"
         run: |
           bin/rails db:create
           bin/rails db:migrate
@@ -83,6 +82,4 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/scout_service_test
-          SECRET_KEY_BASE: "4eca4755a401ee95ec2029fb59c92a9c5630af7b9e6a7b25cc69c2669e963ded87429300ce8a13889bdf97cd0dbfe5a197dbf8451e71cd45db474e638454be82"
-          # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
