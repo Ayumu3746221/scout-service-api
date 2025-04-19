@@ -1,15 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+company1:
+  name: "株式会社テスト1"
+  email: "company1@example.com"
+  description: "テスト会社1の説明"
+  industry: industry1
 
-one:
-  name: MyString
-  email: MyString
-  address: MyString
-  industry: one
-  discription: MyString
-
-two:
-  name: MyString
-  email: MyString
-  address: MyString
-  industry: two
-  discription: MyString
+company2:
+  name: "株式会社テスト2"
+  email: "company2@example.com"
+  description: "テスト会社2の説明"
+  industry: industry2

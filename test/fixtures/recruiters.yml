@@ -1,11 +1,9 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+recruiter1:
+  name: "採用担当者1"
+  user: recruiter_user
+  company: company1
 
-one:
-  id: one
-  company_id: one
-  name: MyString
-
-two:
-  id: two
-  company_id: two
-  name: MyString
+recruiter2:
+  name: "採用担当者2"
+  user: recruiter_user2
+  company: company2
