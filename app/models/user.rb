@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :validatable, :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   has_one :recruiter, dependent: :destroy
+  has_one :student, dependent: :destroy
 
   enum :role, { student: 0, recruiter: 1 }
 

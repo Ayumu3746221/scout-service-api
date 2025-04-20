@@ -1,0 +1,59 @@
+ruby:
+  id: 1
+  name: Ruby on Rails
+
+javascript:
+  id: 2
+  name: JavaScript
+
+react:
+  id: 3
+  name: React
+
+python:
+  id: 4
+  name: Python
+
+java:
+  id: 5
+  name: Java
+
+php:
+  id: 6
+  name: PHP
+
+golang:
+  id: 7
+  name: Go
+
+swift:
+  id: 8
+  name: Swift
+
+kotlin:
+  id: 9
+  name: Kotlin
+
+aws:
+  id: 10
+  name: AWS
+
+docker:
+  id: 11
+  name: Docker
+
+kubernetes:
+  id: 12
+  name: Kubernetes
+
+machine_learning:
+  id: 13
+  name: 機械学習
+
+data_analysis:
+  id: 14
+  name: データ分析
+
+ui_ux:
+  id: 15
+  name: UI/UX設計

@@ -16,4 +16,10 @@ Rails.application.routes.draw do
   end
 
   resources :recruiters, only: [ :create ]
+
+  namespace :api do
+    namespace :v1 do
+      resources :students, only: [ :show, :update ]
+    end
+  end
 end

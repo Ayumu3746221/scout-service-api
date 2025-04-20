@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_19_022753) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_19_141015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,6 +48,43 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_19_022753) do
     t.index ["user_id"], name: "index_recruiters_on_user_id"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_industries", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "industry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["industry_id"], name: "index_student_industries_on_industry_id"
+    t.index ["student_id", "industry_id"], name: "index_student_industries_on_student_id_and_industry_id", unique: true
+    t.index ["student_id"], name: "index_student_industries_on_student_id"
+  end
+
+  create_table "student_skills", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "skill_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["skill_id"], name: "index_student_skills_on_skill_id"
+    t.index ["student_id", "skill_id"], name: "index_student_skills_on_student_id_and_skill_id", unique: true
+    t.index ["student_id"], name: "index_student_skills_on_student_id"
+  end
+
+  create_table "students", primary_key: "user_id", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "introduce"
+    t.integer "graduation_year"
+    t.string "school"
+    t.string "portfolio_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_students_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -64,4 +101,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_19_022753) do
   add_foreign_key "companies", "industries"
   add_foreign_key "recruiters", "companies"
   add_foreign_key "recruiters", "users"
+  add_foreign_key "student_industries", "industries"
+  add_foreign_key "student_industries", "users", column: "student_id"
+  add_foreign_key "student_skills", "skills"
+  add_foreign_key "student_skills", "users", column: "student_id"
+  add_foreign_key "students", "users"
 end

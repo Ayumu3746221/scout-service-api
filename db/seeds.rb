@@ -15,3 +15,11 @@ Industry.create!([
   { id: 4, name: "Education" },
   { id: 5, name: "Food & Beverage" }
 ])
+
+Skill.create!([
+  { id: 1, name: "Ruby" },
+  { id: 2, name: "JavaScript" },
+  { id: 3, name: "Python" },
+  { id: 4, name: "Java" },
+  { id: 5, name: "C++" }
+])

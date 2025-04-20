@@ -59,3 +59,60 @@ DB は /docs/erd.plantuml を参考に
 
   4.  二人目の recuiter からは recuiter の権利がある User しか生成できない
   5.  iv.の時に作成された recuiter は作成した recuiter と同一の company を持つ
+
+- **student の仕様**
+
+- プロフィールを変更する
+
+  1. ログイン(student role)していないと変更不可
+  2. 自分自身のプロフィールしか変更できない
+
+  ```json
+  // リクエスト例
+  {
+    "student": {
+      "name": "next_user",
+      "introduce": "B3/情報系",
+      "graduation_year": 2025,
+      "school": "example university",
+      "portofolio_url": "http/example.com/portofolio",
+      "industry_ids": [1, 2, 3]
+    }
+  }
+  ```
+
+- プロフフィールを取得する
+
+  1. 他者も確認できる
+
+  ```json
+  // response例
+  {
+    "user_id": 1,
+    "name": "next_user",
+    "introduce": "B3/情報系",
+    "graduation_year": 2025,
+    "school": null,
+    "portfolio_url": null,
+    "industries": [
+      {
+        "id": 1,
+        "name": "IT"
+      },
+      {
+        "id": 2,
+        "name": "Finance"
+      },
+      {
+        "id": 3,
+        "name": "Healthcare"
+      }
+    ],
+    "skills" : [
+      {
+        "id": 1,
+        "name": "Ruby on Rails"
+      }
+    ]
+  },
+  ```

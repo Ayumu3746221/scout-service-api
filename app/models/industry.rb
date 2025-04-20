@@ -1,5 +1,7 @@
 class Industry < ApplicationRecord
   has_many :companies
+  has_many :student_industries, dependent: :destroy
+  has_many :students, through: :student_industries
 
   validates :name, presence: true
 

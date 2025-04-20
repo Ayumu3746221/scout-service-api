@@ -1,0 +1,23 @@
+student1_ruby:
+  student_id: 1 # student1のID
+  skill_id: 1 # ruby スキルのID
+
+student1_javascript:
+  student_id: 1 # student1のID
+  skill_id: 2 # javascript スキルのID
+
+student1_react:
+  student_id: 1 # student1のID
+  skill_id: 3 # react スキルのID
+
+student2_python:
+  student_id: 2 # student2のID
+  skill_id: 4 # python スキルのID
+
+student2_machine_learning:
+  student_id: 2 # student2のID
+  skill_id: 13 # machine_learning スキルのID
+
+student2_data_analysis:
+  student_id: 2 # student2のID
+  skill_id: 14 # data_analysis スキルのID

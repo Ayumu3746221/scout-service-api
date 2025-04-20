@@ -1,0 +1,31 @@
+student1_it:
+  student: student1
+  industry: it
+
+student1_finance:
+  student: student1
+  industry: finance
+
+student1_consulting:
+  student: student1
+  industry: consulting
+
+student2_healthcare:
+  student: student2
+  industry: healthcare
+
+student2_education:
+  student: student2
+  industry: education
+
+student2_media:
+  student: student2
+  industry: media
+
+student3_it:
+  student: student3
+  industry: it
+
+student3_manufacturing:
+  student: student3
+  industry: manufacturing

@@ -1,5 +1,47 @@
-industry1:
-  name: "IT・通信"
+it:
+  id: 1
+  name: IT
 
-industry2:
-  name: "金融・保険"
+finance:
+  id: 2
+  name: Finance
+
+healthcare:
+  id: 3
+  name: Healthcare
+
+consulting:
+  id: 4
+  name: コンサルティング
+
+manufacturing:
+  id: 5
+  name: 製造業
+
+retail:
+  id: 6
+  name: 小売・流通
+
+media:
+  id: 7
+  name: メディア・広告
+
+education:
+  id: 8
+  name: 教育
+
+real_estate:
+  id: 9
+  name: 不動産
+
+energy:
+  id: 10
+  name: エネルギー
+
+transportation:
+  id: 11
+  name: 運輸・物流
+
+government:
+  id: 12
+  name: 公共サービス

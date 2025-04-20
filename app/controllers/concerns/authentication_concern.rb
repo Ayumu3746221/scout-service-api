@@ -7,6 +7,12 @@ module AuthenticationConcern
     end
   end
 
+  def authorize_student
+    unless current_user.id == @student.user_id
+      render json: { error: "Forbidden" }, status: :forbidden
+    end
+  end
+
   def current_company
     token = request.headers["Authorization"]&.split(" ")&.last
     return nil unless token
