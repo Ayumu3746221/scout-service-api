@@ -136,3 +136,23 @@ DB は /docs/erd.plantuml を参考に
     }
   ]
   ```
+
+**industries の仕様**
+
+- マスターテーブルの為、GET のみ実装
+
+  GET : /api/v1/industries
+
+  ```json
+  // レスポンス例
+  [
+    {
+      "id": 1,
+      "name": "IT"
+    },
+    {
+      "id": 2,
+      "name": "Finance"
+    }
+  ]
+  ```
