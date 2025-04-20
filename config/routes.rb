@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "skills/show"
   get "recruiters/create"
   get "companies/create_with_cruiter"
   devise_for :users, path: "", path_names: {
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :students, only: [ :show, :update ]
+      resources :skills, only: [ :index ]
     end
   end
 end

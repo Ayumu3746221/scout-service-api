@@ -116,3 +116,23 @@ DB は /docs/erd.plantuml を参考に
     ]
   },
   ```
+
+**skills の仕様**
+
+- マスターテーブルの為、GET のみ実装
+
+  GET : /api/v1/skills
+
+  ```json
+  // レスポンス例
+  [
+    {
+      "id": 1,
+      "name": "Ruby"
+    },
+    {
+      "id": 2,
+      "name": "JavaScript"
+    }
+  ]
+  ```
