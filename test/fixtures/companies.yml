@@ -2,10 +2,10 @@ company1:
   name: "株式会社テスト1"
   email: "company1@example.com"
   description: "テスト会社1の説明"
-  industry: it
+  industry: 1
 
 company2:
   name: "株式会社テスト2"
   email: "company2@example.com"
   description: "テスト会社2の説明"
-  industry: finance
+  industry: 2

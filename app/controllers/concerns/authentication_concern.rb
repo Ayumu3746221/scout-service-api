@@ -9,7 +9,7 @@ module AuthenticationConcern
 
   def authorize_student
     unless current_user.id == @student.user_id
-      render json: { error: "Unauthorized" }, status: :unauthorized
+      render json: { error: "Forbidden" }, status: :forbidden
     end
   end
 
