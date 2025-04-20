@@ -1,9 +1,23 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+student1_ruby:
+  student: student1
+  skill: ruby
 
-one:
-  student: one
-  skill: one
+student1_javascript:
+  student: student1
+  skill: javascript
 
-two:
-  student: two
-  skill: two
+student1_react:
+  student: student1
+  skill: react
+
+student2_python:
+  student: student2
+  skill: python
+
+student2_machine_learning:
+  student: student2
+  skill: machine_learning
+
+student2_data_analysis:
+  student: student2
+  skill: data_analysis

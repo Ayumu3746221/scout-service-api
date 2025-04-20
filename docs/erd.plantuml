@@ -24,7 +24,7 @@ entity "notification" as notification {
     * created_at : DATETIME       ' 通知作成日時
 }
 
-entity "student" as student {
+entity "student(created)" as student {
     * id : INT <<PK>> <<FK>>  ' 外部キー
     --
     * name : VARCHAR          ' 学生名
@@ -74,14 +74,14 @@ entity "message" as message {
 }
 
 ' マスターテーブル : スキル
-entity "skill" as skill {
+entity "skill(created)" as skill {
     * id : INT <<PK>>
     --
     * name : VARCHAR          ' スキル名
 }
 
 ' 中間テーブル : 学生とスキル
-entity "student_skill" as student_skill {
+entity "student_skill(created)" as student_skill {
     * student_id : INT <<FK>> ' 外部キー
     * skill_id : INT <<FK>>   ' 外部キー
 }
