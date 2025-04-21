@@ -156,3 +156,10 @@ DB は /docs/erd.plantuml を参考に
     }
   ]
   ```
+
+- **job-posting（募集）の仕様**
+
+- recruiter のみ作成可能
+
+  1. recruiter が所属している company の募集を作成、編集、削除できる
+  2. is_active が true のもののみ、全件出力で誰でも取得できる
