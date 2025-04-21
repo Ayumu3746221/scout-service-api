@@ -186,4 +186,43 @@ class Api::V1::StudentsControllerTest < ActionDispatch::IntegrationTest
     # 他のフィールドは変わっていないことを確認
     assert_equal "テスト用の自己紹介です", @student.introduce
   end
+
+  test "should export student profile to excel" do
+  # 認証付きでエクスポートを実行
+  get export_api_v1_student_path(@student),
+      headers: { "Authorization" => "Bearer #{@token}" }
+
+  assert_response :success
+
+  # 正しいContent-Typeでレスポンスが返ってきているか確認
+  assert_equal "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+               response.content_type
+
+  # ファイル名が正しいフォーマットになっているか確認
+  assert_match(/^attachment; filename=\"profile_info\.xlsx\"/,
+               response.headers["Content-Disposition"])
+
+  # レスポンスボディが空でないことを確認
+  assert_not_empty response.body
+end
+
+test "should not export student profile without authentication" do
+  get export_api_v1_student_path(@student)
+
+  assert_response :unauthorized
+end
+
+test "should not export other student's profile" do
+  get export_api_v1_student_path(@student),
+      headers: { "Authorization" => "Bearer #{@other_token}" }
+
+  assert_response :forbidden
+end
+
+test "should return 404 for non-existent student export" do
+  get export_api_v1_student_path(999999),
+      headers: { "Authorization" => "Bearer #{@token}" }
+
+  assert_response :not_found
+end
 end

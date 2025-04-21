@@ -48,3 +48,6 @@ end
 
 gem "devise", "~> 4.9"
 gem "devise-jwt", "~> 0.12.1"
+
+gem "caxlsx", "~> 4.2"
+gem "caxlsx_rails", "~> 0.6.4"

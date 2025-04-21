@@ -22,6 +22,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "industries/show"
       resources :students, only: [ :show, :update ]
+      resources :students do
+        member do
+          get :export
+        end
+      end
       resources :skills, only: [ :index ]
       resources :industries, only: [ :index ]
     end
