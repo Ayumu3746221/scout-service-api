@@ -117,6 +117,9 @@ DB は /docs/erd.plantuml を参考に
   },
   ```
 
+- 一部のプロフィールを excel 形式で出力できる
+  GET:/api/v1/students/:id/export
+
 **skills の仕様**
 
 - マスターテーブルの為、GET のみ実装

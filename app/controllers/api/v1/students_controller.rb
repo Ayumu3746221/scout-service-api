@@ -1,9 +1,11 @@
+require "caxlsx"
+
 class Api::V1::StudentsController < ApplicationController
   include AuthenticationConcern
 
-  before_action :authenticate_user!, only: [ :update ]
-  before_action :set_student, only: [ :show, :update ]
-  before_action :authorize_student, only: [ :update ]
+  before_action :authenticate_user!, only: [ :update, :export ]
+  before_action :set_student, only: [ :show, :update, :export ]
+  before_action :authorize_student, only: [ :update, :export ]
 
   def show
     render json: @student.as_json(
@@ -47,6 +49,30 @@ class Api::V1::StudentsController < ApplicationController
         }
       )
     }, status: :ok
+  end
+
+  def export
+    student = Student.find(params[:id])
+
+    package = Axlsx::Package.new
+    workbook = package.workbook
+
+    workbook.add_worksheet(name: "Student Info") do |sheet|
+      # ヘッダー行
+      sheet.add_row [ "自己紹介", "卒業年度", "学校名", "ポートフォリオURL" ]
+
+      # データ行
+      sheet.add_row [
+        student.introduce,
+        student.graduation_year,
+        student.school,
+        student.portfolio_url
+      ]
+    end
+
+    send_data package.to_stream.read,
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              filename: "#{student.name}_info.xlsx"
   end
 
   private
