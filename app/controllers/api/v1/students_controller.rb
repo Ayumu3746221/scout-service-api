@@ -72,7 +72,7 @@ class Api::V1::StudentsController < ApplicationController
 
     send_data package.to_stream.read,
               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              filename: "#{student.name}_info.xlsx"
+              filename: "profile_info.xlsx"
   end
 
   private
