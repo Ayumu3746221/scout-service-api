@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_19_141015) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_22_002418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_19_141015) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "job_postings", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.text "requirements"
+    t.boolean "is_active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_job_postings_on_company_id"
   end
 
   create_table "jwt_denylists", force: :cascade do |t|
@@ -99,6 +110,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_19_141015) do
   end
 
   add_foreign_key "companies", "industries"
+  add_foreign_key "job_postings", "companies"
   add_foreign_key "recruiters", "companies"
   add_foreign_key "recruiters", "users"
   add_foreign_key "student_industries", "industries"
