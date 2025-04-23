@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       end
       resources :skills, only: [ :index ]
       resources :industries, only: [ :index ]
+      resources :job_postings, only: [ :create ]
     end
   end
 end
