@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  job_posting: 1
+  skill: 2
+
+two:
+  job_posting: 2
+  skill: 3

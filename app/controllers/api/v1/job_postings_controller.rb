@@ -14,17 +14,38 @@ class Api::V1::JobPostingsController < ApplicationController
       is_active: job_posting_params[:is_active] || false
     })
 
-    if @job_posting.save
+    ActiveRecord::Base.transaction do
+      begin
+        if @job_posting.save
+
+          if params[:job_posting][:skill_ids].present?
+            job_posting_skills_create
+          end
+
+        else
+          raise ActiveRecord::Rollback
+        end
+      rescue => e
+        Rails.logger.error("Job posting creation failed: #{e.message}")
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    if @job_posting.persisted?
       render json: {
         message: "Job posting created successfully",
         job_posting: @job_posting.as_json(
           except: [ :created_at, :updated_at ],
-          ) }, status: :created
+          include: {
+            skills: { only: [ :id, :name ] }
+          }
+        )
+      }, status: :created
     else
       render json: {
-        message: "faild creating Job posting",
+        message: "Job posting creation failed",
         errors: @job_posting.errors.full_messages
-        }, status: :unprocessable_entity
+      }, status: :unprocessable_entity
     end
   end
 
@@ -46,5 +67,16 @@ class Api::V1::JobPostingsController < ApplicationController
       :requirements,
       :is_active
     )
+  end
+
+  # 既存関係のクリーンアップに使う
+  def job_posting_skills_destroy
+    @job_posting.job_posting_skills.destroy_all
+  end
+
+  def job_posting_skills_create
+    params[:job_posting][:skill_ids].each do |skill_id|
+      @job_posting.job_posting_skills.create!(skill_id: skill_id)
+    end
   end
 end
