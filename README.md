@@ -165,4 +165,14 @@ DB は /docs/erd.plantuml を参考に
 - recruiter のみ作成可能
 
   1. recruiter が所属している company の募集を作成、編集、削除できる
+     POST:/api/v1/job_postings
+     PATCH:/api/v1/job_postings/:id
   2. is_active が true のもののみ、全件出力で誰でも取得できる
+     GET:/api/v1/job_postings
+  3. is_active は単一で変更できる
+     PATCH /api/v1/job_postings/:id/toggle_active
+
+- 全件探索
+
+  1. is_active が ture のもののみが全件検索でヒットする。
+     URL:/api/v1/job_postings

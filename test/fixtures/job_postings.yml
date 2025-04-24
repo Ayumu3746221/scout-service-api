@@ -1,0 +1,22 @@
+# test/fixtures/job_postings.yml
+
+job_posting1:
+  company: company1
+  title: Rails開発者募集
+  description: バックエンドエンジニアを募集します。
+  requirements: Ruby on Railsの経験が必要です。
+  is_active: true
+
+job_posting2:
+  company: company1
+  title: フロントエンドエンジニア
+  description: フロントエンド開発を担当する方を探しています。
+  requirements: React.jsの経験が必要です。
+  is_active: false
+
+job_posting3:
+  company: company2
+  title: データサイエンティスト
+  description: データ分析チームの一員として働きます。
+  requirements: 統計学の知識とPythonの経験が必要です。
+  is_active: true

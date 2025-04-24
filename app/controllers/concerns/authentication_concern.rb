@@ -13,6 +13,12 @@ module AuthenticationConcern
     end
   end
 
+  def authorize_recruiter!
+    unless current_user.recruiter?
+      render json: { error: "Forbidden" }, status: :forbidden
+    end
+  end
+
   def current_company
     token = request.headers["Authorization"]&.split(" ")&.last
     return nil unless token

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "industries/show"
+
       resources :students, only: [ :show, :update ]
       resources :students do
         member do
@@ -28,7 +29,15 @@ Rails.application.routes.draw do
         end
       end
       resources :skills, only: [ :index ]
+
       resources :industries, only: [ :index ]
+
+      resources :job_postings, only: [ :index, :show, :create, :update ]
+      resources :job_postings do
+        member do
+          post :toggle_active
+        end
+      end
     end
   end
 end

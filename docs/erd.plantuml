@@ -100,7 +100,7 @@ entity "student_industry(created)" as student_industry {
 }
 
 ' 中間テーブル : 募集とスキル
-entity "job_posting_skill" as job_posting_skill {
+entity "job_posting_skill(created)" as job_posting_skill {
     * job_posting_id : INT <<FK>> ' 外部キー
     * skill_id : INT <<FK>>       ' 外部キー
 }

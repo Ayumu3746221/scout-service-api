@@ -45,12 +45,6 @@ class RecruitersController < ApplicationController
 
   private
 
-  def authorize_recruiter!
-    unless current_user.recruiter?
-      render json: { error: "Forbidden" }, status: :forbidden
-    end
-  end
-
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
