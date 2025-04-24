@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_23_045319) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_23_082516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_045319) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "job_posting_industries", force: :cascade do |t|
+    t.bigint "job_posting_id", null: false
+    t.bigint "industry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["industry_id"], name: "index_job_posting_industries_on_industry_id"
+    t.index ["job_posting_id", "industry_id"], name: "index_job_posting_industries_on_job_posting_id_and_industry_id", unique: true
+    t.index ["job_posting_id"], name: "index_job_posting_industries_on_job_posting_id"
   end
 
   create_table "job_posting_skills", force: :cascade do |t|
@@ -120,6 +130,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_045319) do
   end
 
   add_foreign_key "companies", "industries"
+  add_foreign_key "job_posting_industries", "industries"
+  add_foreign_key "job_posting_industries", "job_postings"
   add_foreign_key "job_posting_skills", "job_postings"
   add_foreign_key "job_posting_skills", "skills"
   add_foreign_key "job_postings", "companies"
