@@ -1,5 +1,6 @@
 class Company < ApplicationRecord
   has_many :recruiters, dependent: :destroy
+  has_many :job_postings, dependent: :destroy
   belongs_to :industry
 
   validates :name, presence: true
