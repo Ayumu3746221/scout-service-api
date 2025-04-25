@@ -44,7 +44,7 @@ entity "company(created)" as company {
     * description : TEXT
 }
 
-entity "job_posting" as job_posting {
+entity "job_posting(created)" as job_posting {
     * id : INT <<PK>>
     --
     * company_id : INT <<FK>> ' 外部キー（Company.id）
