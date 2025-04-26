@@ -122,26 +122,4 @@ class Api::V1::JobPostingsController < ApplicationController
       :is_active
     )
   end
-
-  # 既存関係のクリーンアップに使う
-  def job_posting_skills_destroy
-    @job_posting.job_posting_skills.destroy_all
-  end
-
-  def job_posting_skills_create
-    params[:job_posting][:skill_ids].each do |skill_id|
-      @job_posting.job_posting_skills.create!(skill_id: skill_id)
-    end
-  end
-
-  # 既存関係のクリーンアップに使う
-  def job_posting_industries_destroy
-    @job_posting.job_posting_industries.destroy_all
-  end
-
-  def job_posting_industries_create
-    params[:job_posting][:industry_ids].each do |industry_id|
-      @job_posting.job_posting_industries.create!(industry_id: industry_id)
-    end
-  end
 end

@@ -176,3 +176,12 @@ DB は /docs/erd.plantuml を参考に
 
   1. is_active が ture のもののみが全件検索でヒットする。
      URL:/api/v1/job_postings
+
+**company の仕様**
+
+- 検索について
+  GET:/company/:id
+  GET:/company?industry_ids=〇〇
+
+- recruiter が所属する company のみ編集可能
+  PATCH:/company

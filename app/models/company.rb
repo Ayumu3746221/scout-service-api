@@ -8,4 +8,6 @@ class Company < ApplicationRecord
   validates :address, presence: false
   validates :industry_id, presence: true
   validates :description, presence: false
+
+  scope :with_industry, ->(id) { where(industry_id: id) }
 end

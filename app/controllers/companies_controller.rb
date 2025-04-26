@@ -2,7 +2,10 @@ class CompaniesController < ApplicationController
   include AuthenticationConcern
 
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [ :create_with_recruiter ]
+  before_action :authorize_recruiter!, only: [ :update ]
+  before_action :current_company, only: [ :update ]
+  before_action :set_current_company, only: [ :show ]
+  skip_before_action :authenticate_user!, only: [ :create_with_recruiter, :index, :show ]
 
   def create_with_recruiter
     context = {
@@ -49,10 +52,46 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def index
+    @companies = CompaniesQuery.new(Company.all, params).call
+
+    render json: {
+      companies: @companies.as_json(
+      except: [ :created_at, :updated_at ],
+      include: {
+        industry: { only: [ :id, :name ] }
+      })
+      }, status: :ok
+  end
+
+  def show
+    render json: {
+      company: @company.as_json(
+      except: [ :created_at, :updated_at ],
+      include: {
+        industry: { only: [ :id, :name ] }
+      })
+      }, status: :ok
+  end
+
+  def update
+    @company = current_company
+    if @company.update(company_params)
+      render json: {
+        message: "Company updated successfully",
+        company: @company.as_json(only: [ :id, :name, :email, :industry_id ])
+      }, status: :ok
+    else
+      render json: {
+        errors: @company.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def company_params
-    params.require(:company).permit(:name, :email, :industry_id)
+    params.require(:company).permit(:name, :email, :address, :industry_id, :description)
   end
 
   def user_params
@@ -61,5 +100,11 @@ class CompaniesController < ApplicationController
 
   def recruiter_params
     params.require(:recruiter).permit(:name)
+  end
+
+  def set_current_company
+    @company = Company.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Company not found" }, status: :not_found
   end
 end
