@@ -185,3 +185,8 @@ DB は /docs/erd.plantuml を参考に
 
 - recruiter が所属する company のみ編集可能
   PATCH:/company
+
+**message の仕様**
+
+- recruiter と student のみの会話が可能
+- 二者間同士のメッセージは第三者には閲覧不可

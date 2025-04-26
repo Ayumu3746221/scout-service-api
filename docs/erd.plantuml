@@ -69,7 +69,6 @@ entity "message" as message {
     * sender_id : INT <<FK>>       ' 外部キー（User.id）
     * receiver_id : INT <<FK>>     ' 外部キー（User.id）
     * content : TEXT               ' メッセージ内容
-    * is_read : BOOLEAN            ' メッセージを既読かどうか
     * created_at : DATETIME        ' メッセージ送信日時
 }
 
@@ -106,7 +105,7 @@ entity "job_posting_skill(created)" as job_posting_skill {
 }
 
 ' 中間テーブル : 募集と業界
-entity "job_posting_industry" as job_posting_industry {
+entity "job_posting_industry(created)" as job_posting_industry {
     * job_posting_id : INT <<FK>> ' 外部キー
     * industry_id : INT <<FK>>    ' 外部キー
 }

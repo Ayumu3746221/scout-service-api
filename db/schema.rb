@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_23_082516) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_031718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,6 +68,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_082516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_denylists_on_jti", unique: true
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "recruiters", primary_key: "user_id", force: :cascade do |t|
@@ -135,6 +145,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_082516) do
   add_foreign_key "job_posting_skills", "job_postings"
   add_foreign_key "job_posting_skills", "skills"
   add_foreign_key "job_postings", "companies"
+  add_foreign_key "messages", "users", column: "receiver_id"
+  add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "recruiters", "companies"
   add_foreign_key "recruiters", "users"
   add_foreign_key "student_industries", "industries"

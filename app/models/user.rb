@@ -10,6 +10,22 @@ class User < ApplicationRecord
   validates :role, presence: true
   validates :role, presence: true, inclusion: { in: roles.keys }
 
+  def name
+    case role
+    when "student"
+      student&.name
+    when "recruiter"
+      recruiter&.name
+    else
+      nil
+    end
+  end
+
+  def company_name
+    return nil unless recruiter
+    recruiter.company&.name
+  end
+
   def jwt_payload
     payload = {}
     if recruiter? && recruiter&.company.present?

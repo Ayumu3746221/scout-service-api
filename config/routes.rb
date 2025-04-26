@@ -37,6 +37,13 @@ Rails.application.routes.draw do
           post :toggle_active
         end
       end
+
+      resources :messages, only: [ :create ] do
+        collection do
+          get "conversation/:partner_id", to: "messages#conversation"
+          get "partners", to: "messages#partners"
+        end
+      end
     end
   end
 end
