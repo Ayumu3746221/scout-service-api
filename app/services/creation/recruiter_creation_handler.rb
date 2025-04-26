@@ -10,7 +10,7 @@ module Creation
       recuiter = Recruiter.new(
         user_id: user.id,
         company_id: company.id,
-        name: context[:recruiter_params].slice(:name)
+        name: context[:recruiter_params][:name]
       )
 
       if recuiter.save
