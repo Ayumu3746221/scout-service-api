@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
 
-  resources :companies, only: [] do
+  resources :companies, only: [ :update, :index, :show ] do
     post "create_with_recruiter", on: :collection
   end
 
@@ -22,18 +22,17 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "industries/show"
 
-      resources :students, only: [ :show, :update ]
-      resources :students do
+      resources :students, only: [ :show, :update ] do
         member do
           get :export
         end
       end
+
       resources :skills, only: [ :index ]
 
       resources :industries, only: [ :index ]
 
-      resources :job_postings, only: [ :index, :show, :create, :update ]
-      resources :job_postings do
+      resources :job_postings, only: [ :index, :show, :create, :update ] do
         member do
           post :toggle_active
         end
