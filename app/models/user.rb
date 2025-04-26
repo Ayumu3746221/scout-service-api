@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_one :recruiter, dependent: :destroy
   has_one :student, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+
   enum :role, { student: 0, recruiter: 1 }
 
   validates :role, presence: true

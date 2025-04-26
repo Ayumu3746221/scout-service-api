@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "applications/index"
+  get "applications/create"
+  get "applications/update"
+  get "notification/index"
+  get "notification/mark_as_read"
+  get "notification/mark_all_as_read"
   get "skills/show"
   get "recruiters/create"
   get "companies/create_with_cruiter"
@@ -35,6 +41,7 @@ Rails.application.routes.draw do
       resources :job_postings, only: [ :index, :show, :create, :update ] do
         member do
           post :toggle_active
+          post :apply, to: "applications#create"
         end
       end
 
@@ -44,6 +51,18 @@ Rails.application.routes.draw do
           get :partners
         end
       end
+
+      resources :notifications, only: [ :index ] do
+        member do
+          patch :mark_as_read
+        end
+
+        collection do
+          patch :mark_all_as_read
+        end
+      end
+
+      resources :applications, only: [ :index, :update ]
     end
   end
 end

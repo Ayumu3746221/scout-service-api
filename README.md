@@ -190,3 +190,40 @@ DB は /docs/erd.plantuml を参考に
 
 - recruiter と student のみの会話が可能
 - 二者間同士のメッセージは第三者には閲覧不可
+
+1. メッセージを送る時
+   POST : /api/v1/messages
+
+```json
+// リクエスト例：また自身のidはdeviseのcurrent_userを使っている
+{
+  "message": {
+    "receiver_id": 2,
+    "content": "これはテストです。"
+  }
+}
+```
+
+2. メッセージを確認するとき
+   GET: /api/v1/messages/conversation/:id
+   この:id は相手の id となる
+
+3. メッセージをしている相手の一覧を取得する
+   GET: /api/v1/messages/partners
+
+**notification の仕様**
+
+- 応募やメッセージのリクエストが送られてきた、”処理後”に通知が作成される
+
+1. 通知を確認する
+   GET:/api/v1/notification
+2. 通知を既読にする
+   PACTH:/api/v1/mark_as_read
+3. 通知の全てを既読にする
+   PACHT:/api/v1/mark_all_as_read
+
+**application の仕様**
+
+- 応募のステータスを recruiter が変更できる
+- 応募してきた求人の一覧を recruiter は確認できる
+- student はこのコントローラーを使って応募できる

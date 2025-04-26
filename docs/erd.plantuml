@@ -15,13 +15,24 @@ entity "user（created）" as user {
     * role : ENUM("student", "recruiter")
 }
 
-entity "notification" as notification {
+entity "notification(created)" as notification {
     * id : INT <<PK>>
     --
     * user_id : INT <<FK>>        ' 外部キー（User.id）
     * content : TEXT              ' 通知の内容
     * is_read : BOOLEAN           ' 通知を見たかどうか
     * created_at : DATETIME       ' 通知作成日時
+    * notifiable : POLYMORPHIC
+    * notifiable_type : STRING
+}
+
+entity "application" as application {
+    * id : INT <<PK>>
+    --
+    * job_posting_id : INT <<FK>> ' 外部キー（JobPosting.id）
+    * student_id : INT <<FK>>   ' 外部キー（Student.id）
+    * message : TEXT
+    * status : STRING      'default pending
 }
 
 entity "student(created)" as student {
@@ -63,7 +74,7 @@ entity "recruiter(created)" as recruiter {
     * name : VARCHAR
 }
 
-entity "message" as message {
+entity "message(created)" as message {
     * id : INT <<PK>>
     --
     * sender_id : INT <<FK>>       ' 外部キー（User.id）
@@ -129,5 +140,7 @@ job_posting ||--o{ job_posting_skill : "requires skills"
 skill ||--o{ job_posting_skill : ""
 job_posting ||--o{ job_posting_industry : "targets industries"
 industry ||--o{ job_posting_industry : ""
+student ||--o{ application : "applies
+job_posting ||--o{ application : "receives applications"
 
 @enduml

@@ -6,6 +6,8 @@ class Message < ApplicationRecord
   validate :sender_and_receiver_must_be_different
   validate :only_student_and_recruiter_pairs
 
+  after_create :create_notification
+
   scope :conversation_between, ->(user1, user2) {
     where(sender_id: user1.id, receiver_id: user2.id)
     .or(where(sender_id: user2.id, receiver_id: user1.id))
@@ -28,5 +30,14 @@ class Message < ApplicationRecord
     unless [ sender.role, receiver.role ].sort == %W[recruiter student].sort
       errors.add(:base, "must be a student and a recruiter")
     end
+  end
+
+  def create_notification
+    Notification.create(
+      user: receiver,
+      content: "#{sender.name}さんからメッセージが届きました",
+      notifiable: self,
+      notification_type: "new_message"
+    )
   end
 end

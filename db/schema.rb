@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_26_031718) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_115747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.bigint "job_posting_id", null: false
+    t.bigint "student_id", null: false
+    t.text "message"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_posting_id", "student_id"], name: "index_applications_on_job_posting_id_and_student_id", unique: true
+    t.index ["job_posting_id"], name: "index_applications_on_job_posting_id"
+    t.index ["student_id"], name: "index_applications_on_student_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -80,6 +92,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_031718) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.boolean "is_read", default: false
+    t.string "notifiable_type"
+    t.bigint "notifiable_id"
+    t.string "notification_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "recruiters", primary_key: "user_id", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.string "name"
@@ -139,6 +164,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_031718) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "applications", "job_postings"
+  add_foreign_key "applications", "users", column: "student_id"
   add_foreign_key "companies", "industries"
   add_foreign_key "job_posting_industries", "industries"
   add_foreign_key "job_posting_industries", "job_postings"
@@ -147,6 +174,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_031718) do
   add_foreign_key "job_postings", "companies"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notifications", "users"
   add_foreign_key "recruiters", "companies"
   add_foreign_key "recruiters", "users"
   add_foreign_key "student_industries", "industries"
