@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "notification/index"
+  get "notification/mark_as_read"
+  get "notification/mark_all_as_read"
   get "skills/show"
   get "recruiters/create"
   get "companies/create_with_cruiter"
@@ -42,6 +45,16 @@ Rails.application.routes.draw do
         collection do
           get :conversation
           get :partners
+        end
+      end
+
+      resources :notifications, only: [ :index ] do
+        member do
+          post :mark_as_read
+        end
+
+        collection do
+          post :mark_all_as_read
         end
       end
     end
