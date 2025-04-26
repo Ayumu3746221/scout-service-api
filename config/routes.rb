@@ -40,8 +40,8 @@ Rails.application.routes.draw do
 
       resources :messages, only: [ :create ] do
         collection do
-          get "conversation/:partner_id", to: "messages#conversation"
-          get "partners", to: "messages#partners"
+          get :conversation
+          get :partners
         end
       end
     end

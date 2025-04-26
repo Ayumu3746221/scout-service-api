@@ -15,12 +15,16 @@ class Message < ApplicationRecord
   private
 
   def sender_and_receiver_must_be_different
+    return if sender.nil? || receiver.nil?
+
     if sender.role == receiver.role
       errors.add(:base, "must be different roles")
     end
   end
 
   def only_student_and_recruiter_pairs
+    return if sender.nil? || receiver.nil?
+
     unless [ sender.role, receiver.role ].sort == %W[recruiter student].sort
       errors.add(:base, "must be a student and a recruiter")
     end
