@@ -7,6 +7,9 @@ class JobPosting < ApplicationRecord
   has_many :job_posting_industries, dependent: :destroy
   has_many :industries, through: :job_posting_industries
 
+  has_many :apprications, dependent: :destroy
+  has_many :applicants, through: :apprications, source: :student
+
   validates :title, presence: true
 
   attribute :is_active, :boolean, default: true

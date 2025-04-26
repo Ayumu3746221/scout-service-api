@@ -2,6 +2,9 @@ class Student < ApplicationRecord
   self.primary_key = :user_id
   belongs_to :user
 
+  has_many :applications, dependent: :destroy
+  has_many :applied_job_postings, through: :applications, source: :job_posting
+
   has_many :student_industries, dependent: :destroy
   has_many :industries, through: :student_industries
 

@@ -20,7 +20,7 @@ class Api::V1::NotificationsController < ApplicationController
 
   def mark_as_read
     @notification = current_user.notifications.find(params[:id])
-    @notification.mark_as_read!
+    @notification.mark_as_read
 
     render json: { message: "Notification marked as read" }
   end

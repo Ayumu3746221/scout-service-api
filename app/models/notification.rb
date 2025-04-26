@@ -12,8 +12,4 @@ class Notification < ApplicationRecord
   def mark_as_read
     update!(is_read: true)
   end
-
-  def mark_as_unread
-    update!(is_read: false)
-  end
 end
