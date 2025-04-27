@@ -225,5 +225,8 @@ DB は /docs/erd.plantuml を参考に
 **application の仕様**
 
 - 応募のステータスを recruiter が変更できる
+  PATCH /api/v1/applications/:id
 - 応募してきた求人の一覧を recruiter は確認できる
+  GET /api/v1/applications
 - student はこのコントローラーを使って応募できる
+  POST /api/v1/job_postings/:job_posting_id/apply

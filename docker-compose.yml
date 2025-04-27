@@ -16,6 +16,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - scout-network
 
   api:
     build:
@@ -39,6 +41,8 @@ services:
       rm -f tmp/pids/server.pid &&
       bundle exec rails db:create db:migrate db:seed &&
       bundle exec rails s -p 3000 -b '0.0.0.0'"
+    networks:
+      - scout-network
 
   test:
     build:
@@ -58,7 +62,13 @@ services:
       bundle install &&
       rm -f tmp/pids/server.pid &&
       bundle exec rails db:create db:migrate"
+    networks:
+      - scout-network
 
 volumes:
   postgres_data:
   bundle_cache:
+
+networks:
+  scout-network:
+    driver: bridge
