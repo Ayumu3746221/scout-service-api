@@ -7,10 +7,16 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    render json: {
+    response_data = {
       message: "Logged in successfully.",
       user: resource.as_json(only: [ :id, :email, :role ])
-    }, status: :ok
+    }
+
+    if resource.recruiter? && resource.jwt_payload[:company_id].present?
+      response_data[:user][:company] = resource.jwt_payload[:company_id]
+    end
+
+    render json: response_data, status: :ok
   end
 
   def respond_to_on_destroy
