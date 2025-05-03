@@ -11,6 +11,9 @@ class Api::V1::NotificationsController < ApplicationController
         include: {
           notifiable: {
             only: [ :id, :content ]
+          },
+          sender: {
+            only: [ :id, :name ]
           }
         }
       ),

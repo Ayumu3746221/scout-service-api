@@ -1,8 +1,8 @@
 class Api::V1::JobPostingsController < ApplicationController
   include AuthenticationConcern
 
-  before_action :authenticate_user!, only: [ :create, :update, :toggle_active ]
-  before_action :authorize_recruiter!, only: [ :create, :update, :toggle_active ]
+  before_action :authenticate_user!, only: [ :create, :update, :toggle_active, :by_company ]
+  before_action :authorize_recruiter!, only: [ :create, :update, :toggle_active, :by_company ]
   before_action :set_current_company, only: [ :create, :update, :toggle_active ]
   before_action :set_job_posting, only: [ :show, :update, :toggle_active ]
   before_action :authorize_job_posting, only: [ :update, :toggle_active ]
@@ -88,6 +88,22 @@ class Api::V1::JobPostingsController < ApplicationController
         errors: @job_posting.errors.full_messages
       }, status: :unprocessable_entity
     end
+  end
+
+  def by_company
+    company_id = current_user.recruiter.company_id
+    @job_postings = JobPosting.by_company(company_id)
+
+    render json: {
+      job_postings: @job_postings.as_json(
+        except: [ :created_at, :updated_at ],
+        include: {
+          company: { only: [ :id, :name ] },
+          skills: { only: [ :id, :name ] },
+          industries: { only: [ :id, :name ] }
+        }
+      )
+    }, status: :ok
   end
 
   private

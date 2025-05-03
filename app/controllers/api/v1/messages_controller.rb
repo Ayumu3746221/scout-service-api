@@ -27,7 +27,7 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   def conversation
-    @partner = User.find_by(id: params[:partner_id])
+    @partner = User.find_by(id: params[:id])
     message = Message.conversation_between(current_user, @partner)
 
     render json: {
