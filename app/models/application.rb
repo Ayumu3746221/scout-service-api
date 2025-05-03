@@ -17,9 +17,9 @@ class Application < ApplicationRecord
     recruiter.each do |recruiter|
       Notification.create(
         user: recruiter.user,
+        sender: student.user,
         content: "#{student.name} さんが「#{job_posting.title}」に応募しました。",
-        notifiable: self,
-        notifiable_type: "new_application",
+        notifiable: self
       )
     end
   end

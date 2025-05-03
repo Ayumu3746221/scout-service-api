@@ -39,6 +39,9 @@ Rails.application.routes.draw do
       resources :industries, only: [ :index ]
 
       resources :job_postings, only: [ :index, :show, :create, :update ] do
+        collection do
+          get :by_company
+        end
         member do
           post :toggle_active
           post :apply, to: "applications#create"
@@ -46,8 +49,10 @@ Rails.application.routes.draw do
       end
 
       resources :messages, only: [ :create ] do
-        collection do
+        member do
           get :conversation
+        end
+        collection do
           get :partners
         end
       end

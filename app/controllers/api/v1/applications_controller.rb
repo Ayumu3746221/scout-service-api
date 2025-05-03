@@ -91,7 +91,7 @@ class Api::V1::ApplicationsController < ApplicationController
   end
 
   def set_job_posting
-    @job_posting = JobPosting.find(params[:job_posting_id])
+    @job_posting = JobPosting.find(params[:id])
 
     # 非アクティブな求人には応募できないようにする
     unless @job_posting.is_active
