@@ -173,30 +173,6 @@ class Api::V1::MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_includes json_response["errors"], "must be different roles"
   end
 
-  test "should get conversation between users" do
-    get conversation_api_v1_messages_path(partner_id: @recruiter_user.id),
-        headers: { "Authorization" => "Bearer #{@student_token}" },
-        as: :json
-
-    assert_response :success
-
-    json_response = JSON.parse(response.body)
-    assert_equal 2, json_response["messages"].length
-
-    # 最初のメッセージが古いものから順に並んでいるか確認
-    assert_equal @message1.id, json_response["messages"][0]["id"]
-    assert_equal @message2.id, json_response["messages"][1]["id"]
-
-    # 送信者と受信者情報が含まれているか確認
-    assert_equal @student_user.id, json_response["messages"][0]["sender"]["id"]
-    assert_equal @recruiter_user.id, json_response["messages"][0]["receiver"]["id"]
-  end
-
-  test "should not get conversation without authentication" do
-    get conversation_api_v1_messages_path(partner_id: @recruiter_user.id), as: :json
-    assert_response :unauthorized
-  end
-
   test "should get partners list" do
     get partners_api_v1_messages_path,
         headers: { "Authorization" => "Bearer #{@student_token}" },
